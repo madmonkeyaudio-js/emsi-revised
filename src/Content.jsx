@@ -23,10 +23,7 @@ class Content extends Component {
             year: ''
         }, 
         yearRange: [], 
-        regionTrendPerc: [],
-        stateTrendPerc: [],
-        nationTrendPerc: [], 
-
+        trendArray: []
     }
 
     componentDidMount() {
@@ -34,27 +31,26 @@ class Content extends Component {
     }
 
     emsiRequest = () => {
+
         let yearArray = [];
-        let regionTrendPerc = [];
-        let stateTrendPerc = [];
-        let nationTrendPerc = [];
 
         axios.get('http://www.mocky.io/v2/5a29b5672e00004a3ca09d33')
         .then(response => {
             let myData = response.data;
+            
             let regionTrend = myData.trend_comparison.regional;
             let stateTrend = myData.trend_comparison.nation;
             let nationTrend = myData.trend_comparison.state;
+            
+            //Push into new array to send as a prop
+            this.state.trendArray.push(regionTrend, stateTrend, nationTrend)
+            console.log('This is my trend data!', this.state.trendArray)
            
             for(let i = myData.trend_comparison.start_year; i <= myData.trend_comparison.end_year; i++) {
                 yearArray.push(`${i}`)
             }
-            for(let j = 0; j <= regionTrend.length; j++){
-                regionTrendPerc.push((((regionTrend[j]/regionTrend[0])*100)-100).toFixed(2))
-                stateTrendPerc.push((((stateTrend[j]/stateTrend[0])*100)-100).toFixed(2))
-                nationTrendPerc.push((((nationTrend[j]/nationTrend[0])*100)-100).toFixed(2))
-            }
-
+            
+            
             this.setState({
                 occupation: myData.occupation,
                 region: myData.region,
@@ -62,9 +58,6 @@ class Content extends Component {
                 trendComparison: myData.trend_comparison, 
                 employingIndustries: myData.employing_industries, 
                 yearRange: yearArray, 
-                regionTrendPerc, 
-                stateTrendPerc, 
-                nationTrendPerc, 
             })
         })
         .catch(err => {
@@ -81,9 +74,7 @@ class Content extends Component {
                 trendComparison: this.state.trendComparison,
                 employingIndustries: this.state.employingIndustries, 
                 yearRange: this.state.yearRange,
-                regionTrendPerc: this.state.regionTrendPerc,
-                stateTrendPerc: this.state.stateTrendPerc,
-                nationTrendPerc: this.state.nationTrendPerc
+                trendArray: this.state.trendArray
             })
         }
     }
@@ -105,13 +96,10 @@ class Content extends Component {
                     statePerc={this.state.stateTrendPerc} 
                     nationPerc={this.state.nationTrendPerc} 
                     regionPerc={this.state.regionTrendPerc}
-                    trendCompReg={this.state.trendComparison.regional}
-                    trendCompState={this.state.trendComparison.state}
-                    trendCompNation={this.state.trendComparison.nation}/>
+                    trends={this.state.trendArray}/>
                 <BarGraph 
                     data={this.state.employingIndustries}
-                    title={this.state.occupation.title}
-                    />
+                    title={this.state.occupation.title}/>
             </div>
         )
     }
