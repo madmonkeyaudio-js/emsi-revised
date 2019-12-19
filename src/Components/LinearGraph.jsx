@@ -8,12 +8,7 @@ function LinearGraph(props) {
     }
     
     let dateRange = [];
-    let nationPerc = [];
-    let statePerc = [];
-    let regionPerc = [];
-    let victoryNationData = [];
-    let victoryStateData = [];
-    let victoryRegionData = [];
+    let victoryData = [];
 
     let trends = [];
 
@@ -37,10 +32,6 @@ function LinearGraph(props) {
                 }
             }
         }
-
-        populateChart(dateRange, nationPerc, victoryNationData);
-        populateChart(dateRange, statePerc, victoryStateData)
-        populateChart(dateRange, regionPerc, victoryRegionData)
     }
     let trendData = trends.map((t, idx) => {
         return (
@@ -78,21 +69,7 @@ function LinearGraph(props) {
                     data: { stroke: "#21f4e6" },
                     parent: { border: "1px solid #cbc"}
                     }}
-                    data={victoryNationData}/>
-                <VictoryLine
-                    categories={{}}
-                    style={{
-                    data: { stroke: "#216bf4" },
-                    parent: { border: "1px solid #cbc"},
-                    }}
-                    data={victoryStateData}/>
-                <VictoryLine
-                    categories={{}}
-                    style={{
-                    data: { stroke: "#21b1f4" },
-                    parent: { border: "4px solid #cbc"}
-                    }}
-                    data={victoryRegionData}/>
+                    data={[{x: '1', y:'2'}]}/>
                 </VictoryChart>
 
             </div>
