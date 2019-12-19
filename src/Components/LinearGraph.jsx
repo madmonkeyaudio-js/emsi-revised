@@ -44,7 +44,7 @@ function LinearGraph(props) {
     }
     let trendData = trends.map((t, idx) => {
         return (
-            <div className="linear-grid-section">
+            <div key={idx} className="linear-grid-section">
                 <div>
                     <h5>Region</h5>
                 </div>
@@ -52,7 +52,7 @@ function LinearGraph(props) {
                     <p>{t[0]}</p>
                     <p>{t[t.length -1]}</p>
                     <p>{t[t.length-1] - t[0]}</p>
-                    <p>{((t[t.length-1] - t[0])/(t[0])).toFixed(4)}</p>
+                    <p>{(((t[t.length-1] - t[0])/(t[0]))*100).toFixed(2)}%</p>
                 </div>
             </div>
         )
