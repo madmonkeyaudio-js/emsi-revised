@@ -12,8 +12,17 @@ function LinearGraph(props) {
 
     let trends = [];
 
-    if(props.yearRange) {
-        dateRange = props.yearRange;
+    if(props.data) {
+        let dateRange = []
+        let startYear = props.data.start_year;
+        let endYear = props.data.end_year;
+
+        if(startYear && endYear){
+            for(let i = startYear; i <= endYear; i++){
+                dateRange.push(`${i}`)
+            }
+            console.log('This is my date range!', dateRange)
+        }
 
         trends.push(props.data.regional, props.data.state, props.data.nation)
 

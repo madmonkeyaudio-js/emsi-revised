@@ -32,8 +32,6 @@ class Content extends Component {
 
     emsiRequest = () => {
 
-        let yearArray = [];
-
         axios.get('http://www.mocky.io/v2/5a29b5672e00004a3ca09d33')
         .then(response => {
             let myData = response.data;
@@ -44,10 +42,6 @@ class Content extends Component {
             
             //Push into new array to send as a prop
             this.state.trendArray.push(regionTrend, stateTrend, nationTrend)
-           
-            for(let i = myData.trend_comparison.start_year; i <= myData.trend_comparison.end_year; i++) {
-                yearArray.push(`${i}`)
-            }
             
             this.setState({
                 occupation: myData.occupation,
@@ -55,7 +49,6 @@ class Content extends Component {
                 summary: myData.summary, 
                 trendComparison: myData.trend_comparison, 
                 employingIndustries: myData.employing_industries, 
-                yearRange: yearArray, 
             })
         })
         .catch(err => {
@@ -89,8 +82,7 @@ class Content extends Component {
                     data={this.state.summary} 
                     title={this.state.occupation.title}/>
                 <LinearGraph 
-                    data={this.state.trendComparison} 
-                    yearRange={this.state.yearRange} />
+                    data={this.state.trendComparison}/>
                 <BarGraph 
                     data={this.state.employingIndustries}
                     title={this.state.occupation.title}/>
